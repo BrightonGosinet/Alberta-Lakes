@@ -9,6 +9,9 @@ dist
 .env.local
 .env.*.local
 
+# excel data files
+*.xlsx
+
 # editor/OS files
 .DS_Store
 *.swp
