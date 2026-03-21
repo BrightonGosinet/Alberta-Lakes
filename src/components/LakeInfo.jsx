@@ -87,12 +87,9 @@ export default function LakeInfo({ lake, currentUser, setPage, onBack }) {
           {comments.map(com => (
             <div key={com.id} className="lake-info-comment-card">
               <div className="lake-info-comment-header">
-                <div>
-                  <span className="lake-info-comment-location">{lake.name}</span>
-                  <span className="lake-info-comment-date">{com.date}</span>
-                </div>
+                <p className="lake-info-comment-user">{com.username}</p>
+                <span className="lake-info-comment-date">{com.date}</span>
               </div>
-              <p className="lake-info-comment-user">{com.username}</p>
               <p className="lake-info-comment-text">"{com.comment}"</p>
             </div>
           ))}
