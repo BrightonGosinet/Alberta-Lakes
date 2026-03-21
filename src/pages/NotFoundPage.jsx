@@ -15,7 +15,7 @@ export default function NotFoundPage({ setPage }) {
       
       <h1 style={{ fontSize: "120px", color: C.teal900, marginBottom: "-20px" }}>404</h1>
       <h2 style={{ fontFamily: "'DM Serif Display', serif", color: C.teal800, fontSize: "32px", marginBottom: "16px" }}>
-        Lake Not Found
+        Page Not Found
       </h2>
       <p style={{ color: C.ink3, marginBottom: "2.5rem", maxWidth: "400px", lineHeight: "1.6" }}>
         It looks like you've drifted into uncharted waters. The page you are looking for doesn't exist on our map.

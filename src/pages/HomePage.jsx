@@ -5,7 +5,7 @@ import LakeCard from "../components/LakeCard";
 import LakeMap from "../components/LakeMap";
 import { lakes } from "../data/index.js";
 // import { SectionLabel ***.... } from "../components/UI";
-import LakeDetail from "../components/LakeDetail";
+import LakeInfo from "../components/LakeInfo";
 
 
 export default function HomePage({ currentUser, setPage }) {
@@ -25,7 +25,7 @@ export default function HomePage({ currentUser, setPage }) {
   const renderColumnContent = () => {
     if (detailLake) {
       return (
-        <LakeDetail
+        <LakeInfo
           lake={detailLake}
           currentUser={currentUser}
           setPage={setPage}
@@ -111,6 +111,8 @@ export default function HomePage({ currentUser, setPage }) {
           />
         </div>
       </div>
+      {/* Demo link to 404 page */}
+                <a href="#" onClick={e => { e.preventDefault(); setPage("invalid"); }}>Invalid link (for demo purposes)</a>
     </div>
   );
 }

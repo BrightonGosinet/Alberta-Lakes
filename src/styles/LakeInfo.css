@@ -1,10 +1,10 @@
-.lake-detail {
+.lake-info {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.lake-detail-back-btn {
+.lake-info-back-btn {
   align-self: flex-start;
   display: flex;
   align-items: center;
@@ -18,26 +18,26 @@
   padding: 4px 0;
 }
 
-.lake-detail-back-arrow {
+.lake-info-back-arrow {
   font-size: 16px;
   line-height: 1;
 }
 
-.lake-detail-card {
+.lake-info-card {
   background: #ffffff;
   border: 1.5px solid #e8e3d8;
   border-radius: 12px;
   padding: 18px 20px;
 }
 
-.lake-detail-card-header {
+.lake-info-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 14px;
 }
 
-.lake-detail-lake-name {
+.lake-info-lake-name {
   font-family: 'DM Serif Display', serif;
   font-size: 22px;
   font-weight: 400;
@@ -45,13 +45,13 @@
   margin: 0;
 }
 
-.lake-detail-fields {
+.lake-info-fields {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.lake-detail-field-label {
+.lake-info-field-label {
   font-size: 12px;
   font-weight: 500;
   color: #7a9290;
@@ -59,26 +59,26 @@
   letter-spacing: 0.04em;
 }
 
-.lake-detail-field-value {
+.lake-info-field-value {
   font-size: 14px;
   color: #2a3d3b;
   margin-top: 2px;
 }
 
-.lake-detail-field-date {
+.lake-info-field-date {
   font-size: 12px;
   color: #7a9290;
   margin-left: 8px;
 }
 
-.lake-detail-comment-box {
+.lake-info-comment-box {
   background: #ffffff;
   border: 1.5px solid #e8e3d8;
   border-radius: 12px;
   padding: 14px 16px;
 }
 
-.lake-detail-comment-label {
+.lake-info-comment-label {
   font-size: 13px;
   font-weight: 500;
   color: #2a3d3b;
@@ -86,7 +86,7 @@
   margin-bottom: 8px;
 }
 
-.lake-detail-textarea {
+.lake-info-textarea {
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
@@ -100,11 +100,11 @@
   transition: border-color 0.15s;
 }
 
-.lake-detail-textarea:focus {
+.lake-info-textarea:focus {
   border-color: #2bbfaf;
 }
 
-.lake-detail-submit-btn {
+.lake-info-submit-btn {
   margin-top: 8px;
   padding: 9px 20px;
   background: #1a7a6f;
@@ -117,11 +117,11 @@
   transition: opacity 0.15s;
 }
 
-.lake-detail-submit-btn:hover {
+.lake-info-submit-btn:hover {
   opacity: 0.8;
 }
 
-.lake-detail-comments-heading {
+.lake-info-comments-heading {
   font-size: 12px;
   font-weight: 600;
   color: #7a9290;
@@ -129,46 +129,46 @@
   letter-spacing: 0.06em;
 }
 
-.lake-detail-comments-list {
+.lake-info-comments-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.lake-detail-comment-card {
+.lake-info-comment-card {
   background: #ffffff;
   border: 1px solid #e8e3d8;
   border-radius: 12px;
   padding: 12px 14px;
 }
 
-.lake-detail-comment-header {
+.lake-info-comment-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 6px;
 }
 
-.lake-detail-comment-location {
+.lake-info-comment-location {
   font-size: 14px;
   font-weight: 600;
   color: #0d1f1e;
 }
 
-.lake-detail-comment-date {
+.lake-info-comment-date {
   font-size: 12px;
   color: #7a9290;
   margin-left: 10px;
 }
 
-.lake-detail-comment-user {
+.lake-info-comment-user {
   margin: 0 0 4px;
   font-size: 12px;
   color: #1a7a6f;
   font-weight: 500;
 }
 
-.lake-detail-comment-text {
+.lake-info-comment-text {
   margin: 0;
   font-size: 13px;
   color: #4a5e5c;

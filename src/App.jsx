@@ -12,8 +12,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AboutPage from "./pages/AboutPage";
 
 export default function App() {
-  // const [page, setPage] = useState("home");
-  const [page, setPage] = useState("404");
+  const [page, setPage] = useState("home");
   const [currentUser, setCurrentUser] = useState(null);
 
   const handleLogin = user => { setCurrentUser(user); setPage(user.role === "admin" ? "admin" : "profile"); };
@@ -39,7 +38,7 @@ export default function App() {
         <Navbar page={page} setPage={setPage} currentUser={currentUser} />
         {(page === "admin" || page === "profile") && <PageBanner {...bannerProps[page]} />}
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          {page === "home" && <HomePage />}
+          {page === "home" && <HomePage currentUser={currentUser} setPage={setPage} />}
           {page === "about" && <AboutPage />}
           {page === "login" && <LoginPage setPage={setPage} onLogin={handleLogin} />}
           {page === "register" && <RegisterPage setPage={setPage} onLogin={handleLogin} />}
