@@ -42,11 +42,6 @@ export default function LoginPage({ setPage, onLogin }) {
         No account?{" "}
         <span onClick={() => setPage("register")} style={{ color:C.teal600, cursor:"pointer", fontWeight:"500", textDecoration:"underline" }}>Create one</span>
       </p>
-      <p style={{ marginTop:"14px", fontSize:"11px", color:C.ink4, textAlign:"center", background:C.sand, padding:"8px", borderRadius:"6px" }}>
-        Demo admin: <strong>admin@test.com</strong> / <strong>admin</strong>
-        <br />
-        Demo user: <strong>sampleuser1234@email.com</strong> / <strong>(any)</strong>
-      </p>
     </AuthWrap>
   );
 }
