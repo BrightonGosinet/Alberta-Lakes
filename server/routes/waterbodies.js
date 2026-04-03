@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Waterbody = require('../models/Waterbody');
+const Site = require('../models/Site');
 const { getLatestCellCount, getLatestWaterDescription } = require('../services/samplesService');
 
 router.get('/lakes', async (req, res) => {
@@ -10,10 +11,16 @@ router.get('/lakes', async (req, res) => {
         const waterbodiesWithLatestData = await Promise.all(waterbodies.map(async (waterbody) => {
             const latestCellCount = await getLatestCellCount(waterbody._id);
             const latestWaterDescription = await getLatestWaterDescription(waterbody._id);
+            const site = await Site.findOne({ waterBodyId: waterbody._id });
             return {
                 ...waterbody.toObject(),
-                latestCellCount,
-                latestWaterDescription
+                cellCount: latestCellCount ? latestCellCount.totalCyanobacterial_cells_mL : null,
+                cellCountDate: latestCellCount ? latestCellCount.collectionDateTime : null,
+                waterDescription: latestWaterDescription ? latestWaterDescription.waterDescription : null,
+                waterDescriptionDate: latestWaterDescription ? latestWaterDescription.collectionDateTime : null,
+                latitude: site ? site.location.latitude : null,
+                longitude: site ? site.location.longitude : null,
+                beachName: site ? site.beachName : null
             };
         }));
         res.json(waterbodiesWithLatestData);
@@ -24,3 +31,5 @@ router.get('/lakes', async (req, res) => {
 });
 
 module.exports = router;
+
+
