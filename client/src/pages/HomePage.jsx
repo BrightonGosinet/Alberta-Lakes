@@ -8,8 +8,11 @@ import { fetchLakes } from "../services/dataService";
 import LakeInfo from "../components/LakeInfo";
 
 
+const PAGE_SIZE = 10;
+
 export default function HomePage({ currentUser, setPage, profileSelectedLakeId, setProfileSelectedLakeId, lakes, setLakes, selectedLake, setSelectedLake, detailLake, setDetailLake }) {
   const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (lakes.length === 0) {
@@ -31,6 +34,9 @@ export default function HomePage({ currentUser, setPage, profileSelectedLakeId, 
   const filteredLakes = lakes.filter(l =>
     l.name.toLowerCase().includes(query.toLowerCase())
   );
+
+  const totalPages = Math.ceil(filteredLakes.length / PAGE_SIZE);
+  const paginatedLakes = filteredLakes.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const handleLakeClick = (lake) => {
     setSelectedLake(lake);
@@ -57,18 +63,35 @@ export default function HomePage({ currentUser, setPage, profileSelectedLakeId, 
       );
     }
 
-    return filteredLakes.map(lake => (
-      <LakeCard
-        key={lake._id}
-        lake={lake}
-        selected={selectedLake?._id === lake._id}
-        onClick={handleLakeClick}
-      />
-    ));
+    return (
+      <>
+        {paginatedLakes.map(lake => (
+          <LakeCard
+            key={lake._id}
+            lake={lake}
+            selected={selectedLake?._id === lake._id}
+            onClick={handleLakeClick}
+          />
+        ))}
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>Prev</button>
+            <span>{currentPage} / {totalPages}</span>
+            <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>Next</button>
+          </div>
+        )}
+      </>
+    );
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 56, paddingBottom: 48, flex: 1 }}>
+      <style>{`
+        .pagination { display:flex; justify-content:center; align-items:center; gap:12px; padding:12px 0; }
+        .pagination span { font-size:13px; color:#5a6a72; }
+        .pagination button { border:none; background:none; font-size:13px; color:#1a7a6f; cursor:pointer; font-weight:500; }
+        .pagination button:disabled { color:#ccc; cursor:default; }
+      `}</style>
       {/* Header */}
       <h1 style={{
         fontFamily: "'DM Serif Display', serif",
@@ -92,7 +115,7 @@ export default function HomePage({ currentUser, setPage, profileSelectedLakeId, 
         Discover water quality, conditions, and community reports for lakes across Alberta.
       </p>
 
-      <SearchBar onSearch={setQuery} />
+      <SearchBar onSearch={q => { setQuery(q); setCurrentPage(1); }} />
 
       {/* Two-panel layout */}
       <div style={{
