@@ -39,11 +39,13 @@ export default function LakeMap({ lakes, selectedLake, onSelectLake }) {
       />
       {mappableLakes.map(lake => {
         const lc = levelColor(lake.level);
+        const isSelected = selectedLake?._id === lake._id;
         return (
           <Marker
             key={lake._id}
             position={[lake.latitude, lake.longitude]}
             eventHandlers={{ click: () => onSelectLake(lake) }}
+            ref={ref => { if (ref && isSelected) ref.openPopup(); }}
           >
             <Popup>
               <strong>{lake.name}</strong>
