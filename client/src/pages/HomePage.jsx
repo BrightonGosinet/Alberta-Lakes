@@ -13,6 +13,7 @@ const PAGE_SIZE = 10;
 export default function HomePage({ currentUser, setPage, profileSelectedLakeId, setProfileSelectedLakeId, lakes, setLakes, selectedLake, setSelectedLake, detailLake, setDetailLake }) {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterLevel, setFilterLevel] = useState("all");
 
   useEffect(() => {
     if (lakes.length === 0) {
@@ -29,11 +30,14 @@ export default function HomePage({ currentUser, setPage, profileSelectedLakeId, 
       }
       setProfileSelectedLakeId(null);
     }
-  }, [profileSelectedLakeId, lakes]);
+  }, [profileSelectedLakeId, lakes, setSelectedLake, setDetailLake, setProfileSelectedLakeId]);
 
-  const filteredLakes = lakes.filter(l =>
-    l.name.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredLakes = lakes.filter(l => {
+    const matchesName = l.name.toLowerCase().includes(query.toLowerCase());
+    const matchesLevel = filterLevel === "all" || l.level?.toLowerCase() === filterLevel.toLowerCase();
+    return matchesName && matchesLevel;
+
+  });
 
   const totalPages = Math.ceil(filteredLakes.length / PAGE_SIZE);
   const paginatedLakes = filteredLakes.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
@@ -92,6 +96,7 @@ export default function HomePage({ currentUser, setPage, profileSelectedLakeId, 
         .pagination button { border:none; background:none; font-size:13px; color:#1a7a6f; cursor:pointer; font-weight:500; }
         .pagination button:disabled { color:#ccc; cursor:default; }
       `}</style>
+
       {/* Header */}
       <h1 style={{
         fontFamily: "'DM Serif Display', serif",
@@ -115,40 +120,58 @@ export default function HomePage({ currentUser, setPage, profileSelectedLakeId, 
         Discover water quality, conditions, and community reports for lakes across Alberta.
       </p>
 
-      <SearchBar onSearch={q => { setQuery(q); setCurrentPage(1); }} />
-
-      {/* Two-panel layout */}
-      <div style={{
-        display: "flex",
-        width: "100%",
-        maxWidth: 1200,
-        padding: "28px 24px 0",
-        gap: 24,
-        flex: 1,
-        minHeight: 520,
-      }}>
-        {/* Lake list / detail column */}
-        <div style={{
-          width: "38%",
-          flexShrink: 0,
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
-          paddingRight: 4,
-        }}>
-          {renderColumnContent()}
+      {/* Search and filter */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', maxWidth: 600, marginBottom: 24 }}>
+        <div style={{ flex: 1 }}>
+          <SearchBar onSearch={q => { setQuery(q); setCurrentPage(1); }} />
         </div>
 
-        {/* Map panel */}
-        <div style={{ flex: 1, borderRadius: 12, overflow: "hidden", minHeight: 480 }}>
-          <LakeMap
-            lakes={lakes}
-            selectedLake={selectedLake}
-            onSelectLake={handleLakeClick}
-          />
+        <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #d1d9dd', borderRadius: 24, padding: '4px 12px', height: 42, background: 'white' }}>
+          <span style={{ fontSize: 12, fontWeight: 700, color: '#5a6a72', marginRight: 4 }}>FILTER</span>
+          <select value={filterLevel}
+          onChange={(e) => { setFilterLevel(e.target.value); setCurrentPage(1); }}
+          style={{ border: 'none', background: 'transparent', fontSize: 12, color: '#1a7a6f', fontWeight: 500, cursor: 'pointer' }}>
+            <option value="all">All Levels</option>
+            <option value="high">High</option>
+            <option value="moderate">Moderate</option>
+            <option value="low">Low</option>
+            <option value="no data">No data</option>
+          </select>
         </div>
       </div>
-    </div>
-  );
+
+        {/* Two-panel layout */}
+        <div style={{
+          display: "flex",
+          width: "100%",
+          maxWidth: 1200,
+          padding: "28px 24px 0",
+          gap: 24,
+          flex: 1,
+          minHeight: 520,
+        }}>
+          {/* Lake list / detail column */}
+          <div style={{
+            width: "38%",
+            flexShrink: 0,
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            paddingRight: 4,
+          }}>
+            {renderColumnContent()}
+          </div>
+
+          {/* Map panel */}
+          <div style={{ flex: 1, borderRadius: 12, overflow: "hidden", minHeight: 480 }}>
+            <LakeMap
+              lakes={filteredLakes}
+              selectedLake={selectedLake}
+              onSelectLake={handleLakeClick}
+            />
+          </div>
+        </div>
+      </div>
+      );
 }
