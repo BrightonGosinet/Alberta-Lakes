@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
+const path = require("path");
 
 const { router } = require("./routes/auth");
 const waterbodyRoutes = require("./routes/waterbodies");
@@ -16,16 +17,20 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 
+const isProduction = process.env.NODE_ENV === "production";
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: isProduction
+      ? process.env.CLIENT_ORIGIN
+      : ["http://localhost:5173", "http://127.0.0.1:5173"],
     credentials: true,
   })
 );
 
 app.use(
   session({
-    secret: "cmpt315_lakewatch_project",
+    secret: process.env.SESSION_SECRET || "cmpt315_lakewatch_project",
     resave: false,
     saveUninitialized: false,
   })
@@ -43,10 +48,18 @@ app.use("/api/sites", siteRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/users", userRoutes);
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ message: 'Route not found' });
-});
+// Serve built client in production
+if (isProduction) {
+  const clientDist = path.join(__dirname, "../client/dist");
+  app.use(express.static(clientDist));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(clientDist, "index.html"));
+  });
+} else {
+  app.use((req, res) => {
+    res.status(404).json({ message: "Route not found" });
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

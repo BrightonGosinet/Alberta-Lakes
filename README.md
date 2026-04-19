@@ -1,74 +1,83 @@
 # LakeWatch
 
-A React web application for exploring Alberta lakes, built with Vite and React Leaflet. Uses Node.js and MongoDB Atlas for the server and database.
+An interactive web application for exploring lakes and waterways across Alberta. Users can browse waterbodies on an interactive map, view detailed site information, and leave comments — with full admin moderation controls.
 
-By Ashley Anderson, Dusan Barudzija, Fred Deng, Saad Foda, & Brighton Gosinet
+**Built by:** Ashley Anderson, Dusan Barudzija, Fred Deng, Saad Foda, & Brighton Gosinet
 
-## Prerequisites
+---
 
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
-- npm (comes with Node.js)
+## Features
 
-## Installation
+- **Interactive map** — explore Alberta lakes and waterways via React Leaflet
+- **Lake detail pages** — view water quality data, site descriptions, and photos
+- **User accounts** — register, log in, and manage your profile
+- **Comments** — authenticated users can post and delete their own comments
+- **Admin dashboard** — admins can manage users, waterbodies, and moderate comments
+- **Search** — filter waterbodies by name in real time
 
-Install dependencies for both the client and server:
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 19, Vite, React Leaflet |
+| Backend | Node.js, Express |
+| Database | MongoDB Atlas (Mongoose) |
+| Auth | express-session, bcrypt |
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v18+
+- A [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
+
+### Installation
 
 ```bash
-cd client
-npm install
+# Install client dependencies
+cd client && npm install
 
-cd ../server
-npm install
+# Install server dependencies
+cd ../server && npm install
 ```
 
-## Running the App
+### Environment Setup
 
-### Server
+Copy the example env file and fill in your values:
 
-1. Navigate to the server directory:
+```bash
+cp server/.env.example server/.env
+```
+
+| Variable | Description |
+|----------|-------------|
+| `MONGODB_URI` | MongoDB Atlas connection string |
+| `SESSION_SECRET` | Secret used to sign session cookies |
+| `PORT` | Port the API listens on (default: `3001`) |
+
+### Running the App
+
+**Start the API server:**
 
 ```bash
 cd server
-```
-
-2. Create a `.env` file with your MongoDB connection string:
-
-```
-MONGODB_URI=your_mongodb_atlas_connection_string
-```
-
-3. Start the server:
-
-```bash
 node server.js
+# API available at http://localhost:3001
 ```
 
-The API will be available at `http://localhost:3001`.
-
-### Client
-
-1. In a separate terminal, navigate to the client directory:
+**Start the frontend** (separate terminal):
 
 ```bash
 cd client
-```
-
-2. Start the development server:
-
-```bash
 npm run dev
+# App available at http://localhost:5173
 ```
 
-Opens the app at `http://localhost:5173`.
+## Test Accounts
 
-### Test Accounts
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@test.com | admin |
+| User | sampleuser1234@email.com | abc123 |
 
-The following admin and user accounts are available for testing. New user accounts can also be registered through the application.
-
-#### Admin Account
-- **Email:** admin@test.com
-- **Password:** admin
-
-#### Public User Account 
-- **Email:** sampleuser1234@email.com
-- **Password:** abc123
+New accounts can also be registered through the application.
