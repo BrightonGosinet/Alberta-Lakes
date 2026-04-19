@@ -14,6 +14,7 @@ An interactive web application for exploring lakes and waterways across Alberta.
 - **Comments** — authenticated users can post and delete their own comments
 - **Admin dashboard** — admins can manage users, waterbodies, and moderate comments
 - **Search** — filter waterbodies by name in real time
+- **Live weather** — current conditions (temperature, humidity, wind) for each lake via OpenWeatherMap
 
 ## Tech Stack
 
@@ -23,6 +24,7 @@ An interactive web application for exploring lakes and waterways across Alberta.
 | Backend | Node.js, Express |
 | Database | MongoDB Atlas (Mongoose) |
 | Auth | express-session, bcrypt |
+| Weather | OpenWeatherMap API |
 
 ## Getting Started
 
@@ -30,6 +32,7 @@ An interactive web application for exploring lakes and waterways across Alberta.
 
 - [Node.js](https://nodejs.org/) v18+
 - A [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
+- An [OpenWeatherMap](https://openweathermap.org/api) API key (free tier works)
 
 ### Installation
 
@@ -54,6 +57,7 @@ cp server/.env.example server/.env
 | `MONGODB_URI` | MongoDB Atlas connection string |
 | `SESSION_SECRET` | Secret used to sign session cookies |
 | `PORT` | Port the API listens on (default: `3001`) |
+| `OPENWEATHER_API_KEY` | OpenWeatherMap API key for live weather data |
 
 ### Running the App
 

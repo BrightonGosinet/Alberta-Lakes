@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { levelColor } from "../constants";
 import { fetchLakeComments, submitComment, deleteComment, saveLake, formatDate } from "../services/dataService";
+import useWeather from "../services/useWeather";
 import Toast from "./Toast";
 import "../styles/LakeInfo.css";
 import addLakeIcon from "../public/assets/addLake.png";
@@ -11,6 +12,7 @@ export default function LakeInfo({ lake, currentUser, setPage, onBack }) {
   const [toast, setToast] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
   const [deleteConfirmToast, setDeleteConfirmToast] = useState(null);
+  const { weather, loading: weatherLoading, error: weatherError } = useWeather(lake.latitude, lake.longitude);
 
 
     useEffect(() => {
@@ -157,6 +159,48 @@ export default function LakeInfo({ lake, currentUser, setPage, onBack }) {
             )}
           </div>
         </div>
+
+        {/* Weather widget */}
+        {(weatherLoading || weather || weatherError) && (
+          <div className="lake-info-weather">
+            <span className="lake-info-field-label">Current Weather</span>
+            {weatherLoading && (
+              <p className="lake-info-weather-loading">Loading weather...</p>
+            )}
+            {weatherError && (
+              <p className="lake-info-weather-error">Weather data unavailable</p>
+            )}
+            {weather && (
+              <div className="lake-info-weather-body">
+                <div className="lake-info-weather-main">
+                  <img
+                    src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+                    alt={weather.description}
+                    className="lake-info-weather-icon"
+                  />
+                  <div>
+                    <p className="lake-info-weather-temp">{weather.temp}°C</p>
+                    <p className="lake-info-weather-desc">{weather.description}</p>
+                  </div>
+                </div>
+                <div className="lake-info-weather-stats">
+                  <div className="lake-info-weather-stat">
+                    <span className="lake-info-weather-stat-label">Feels like</span>
+                    <span className="lake-info-weather-stat-value">{weather.feels}°C</span>
+                  </div>
+                  <div className="lake-info-weather-stat">
+                    <span className="lake-info-weather-stat-label">Wind</span>
+                    <span className="lake-info-weather-stat-value">{weather.wind} km/h</span>
+                  </div>
+                  <div className="lake-info-weather-stat">
+                    <span className="lake-info-weather-stat-label">Humidity</span>
+                    <span className="lake-info-weather-stat-value">{weather.humidity}%</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Comment input */}
         <div className="lake-info-comment-box">

@@ -11,6 +11,7 @@ const waterbodyRoutes = require("./routes/waterbodies");
 const siteRoutes = require("./routes/sites");
 const commentRoutes = require("./routes/comments");
 const userRoutes = require("./routes/users");
+const weatherRoutes = require("./routes/weather");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -47,6 +48,7 @@ app.use("/api/waterbodies", waterbodyRoutes);
 app.use("/api/sites", siteRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/weather", weatherRoutes);
 
 // Serve built client in production
 if (isProduction) {
